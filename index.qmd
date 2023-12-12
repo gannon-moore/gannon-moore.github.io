@@ -2,7 +2,7 @@
 title: "Gannon Moore"
 about:
   template: trestles  # jolla  trestles  solana  marquee  broadside
-  image: C: "C:\Users\thega\OneDrive\Pictures\Swimming headshot.png"
+  image: img/headshot.png
   image-width: 16em
   image-shape: round # rectangle  round  rounded
   
@@ -18,7 +18,7 @@ about:
       href: https://github.com/gannon-moore/gannon-moore.github.io 
     - icon: file-earmark-pdf
       text: Resumé
-      href: https://GITHUB_USERNAME.github.io/resume-example.pdf
+      href: "C:\Users\thega\Downloads\Resume .pdf
     - icon: mailbox
       text: Email
       href: mailto:grm4@geneseo.edu
@@ -33,7 +33,7 @@ Southwestern High School | Geneseo, NY <br>
 
 ## Experience
 
-Truck Driver | Lifeguard | May 2024 - Aug 2024
+Booze drinker | ZYNER | May 2024 - Aug 2024
 
 
 
