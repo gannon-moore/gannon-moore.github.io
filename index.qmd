@@ -9,7 +9,8 @@ about:
   links:
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com 
+      href: www.linkedin.com/in/
+gannon-moore-991301290 
     - icon: instagram
       text: Instagram
       href: https://instagram.com
@@ -42,5 +43,8 @@ usethis::create_github_token()
 install.packages("gitcreds")
 gitcreds::gitcreds_set()
 git config --list
+getwd()
+
+
 
 
