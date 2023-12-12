@@ -18,7 +18,7 @@ about:
       href: https://github.com/gannon-moore/gannon-moore.github.io 
     - icon: file-earmark-pdf
       text: Resumé
-      href: "C:\Users\thega\Downloads\Resume .pdf
+      href: 
     - icon: mailbox
       text: Email
       href: mailto:grm4@geneseo.edu
