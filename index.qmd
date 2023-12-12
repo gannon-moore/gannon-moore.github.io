@@ -2,7 +2,7 @@
 title: "Gannon Moore"
 about:
   template: trestles  # jolla  trestles  solana  marquee  broadside
-  image: img/headshot.png
+  image: img/headshot.png 
   image-width: 16em
   image-shape: round # rectangle  round  rounded
   
