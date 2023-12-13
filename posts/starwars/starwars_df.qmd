@@ -1,9 +1,9 @@
 ---
-title: "Starwars"
-author: "Gannon MOore"
-date: "2023-10-30"
-categories: [starwars, code, analysis]
-image: "image.png"
+title: "Resturants"
+author: "Gannon Moore"
+date: "2023-12-12"
+categories: [New York, City]
+image: "Restaurant.jpg"
 
 execute: 
   warning: false
