@@ -2,7 +2,7 @@
 title: "Gannon Moore"
 about:
   template: trestles  # jolla  trestles  solana  marquee  broadside
-  image: img/headshot.png 
+  image: img/Headshot.png 
   image-width: 16em
   image-shape: round # rectangle  round  rounded
   
@@ -18,7 +18,7 @@ about:
       href: https://github.com/gannon-moore/gannon-moore.github.io 
     - icon: file-earmark-pdf
       text: Resumé
-      href: 
+      href: mailto:grm4@geneseo.edu
     - icon: mailbox
       text: Email
       href: mailto:grm4@geneseo.edu
@@ -31,7 +31,7 @@ Gannon Moore majors in Business Administration at SUNY Geneseo. When not working
 Southwestern High School | Geneseo, NY <br>
  
 
-## Experience
+## Experience 
 
 None | May 2024 - Aug 2024
 
