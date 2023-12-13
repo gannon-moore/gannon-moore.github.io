@@ -1,15 +1,73 @@
 ---
-title: "Post With Code"
-author: "YOUR NAME"
-date: "2023-10-30"
-categories: [news, code, analysis]
-image: "image.jpg"
+title: "Spotify"
+author: "Gannon Moore"
+date: "2023-12-12"
+categories: [Songs]
+image: "image2.png"
 ---
 
 This is a post with executable code with no space in the folder name.
 
 ```{r}
-1 + 1
+#| include: false
+
+library(knitr)
+library(rmarkdown)
+library(tidyverse)
+library(skimr)
+library(ggthemes)
+library(hrbrthemes)
+
+theme_set(theme_ipsum()+
+          theme(strip.background =element_rect(fill="lightgray"),
+                axis.title.x  = element_text(angle = 0,
+                                            size = rel(1.5),
+                                            margin = margin(10,0,0,0)),
+                axis.title.y  = element_text(angle = 0,
+                                            size = rel(1.5),
+                                            margin = margin(0,10,0,0))
+                )
+          )
 ```
 
-![](image.jpg)
+Let's analyze the `Spotify` data:
+```{r}
+spotify_all <- read_csv('https://bcdanl.github.io/data/spotify_all.csv')
+```
+```{r}
+Q1c <- spotify_all %>% 
+  group_by(artist_name) %>% 
+  mutate(n_popular_artist = n()) %>% 
+  ungroup() %>% 
+  mutate( artist_ranking = dense_rank( desc(n_popular_artist) ) ) %>% 
+  filter( artist_ranking <= 10) 
+  
+# boxplot
+ggplot(Q1c,
+       aes(x = pos, y = fct_reorder(artist_name, -artist_ranking)) ) +
+  geom_boxplot() +
+  stat_summary(
+    fun = mean,
+    color = 'red'
+  )
+```
+```{r}
+# histogram
+ggplot(Q1c) +
+  geom_histogram(aes(x = pos), binwidth = 1) + 
+  facet_grid(fct_reorder(artist_name, artist_ranking) ~ .  , switch = "y") +
+  theme(strip.text.y.left = element_text(angle = 0))
+```
+```{r}
+Q1a <- spotify_all %>% 
+  count(artist_name, track_name) %>% 
+  arrange(-n) %>% 
+  head(10)
+
+Q1a
+```
+```{r}
+#| results: asis
+rmarkdown::paged_table(spotify_all) 
+```
+

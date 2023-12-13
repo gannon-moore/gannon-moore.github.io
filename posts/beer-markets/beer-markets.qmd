@@ -1,9 +1,10 @@
 ---
 title: "Beer Markets"
-author: "Byeong-Hak Choe"
-date: "2023-11-02"
+author: "Gannon Moore"
+date: "2023-12-12"
 categories: [beer, code, data analysis]
-image: "image.png"
+image: "image2.png"
+from: markdown+emoji
 
 execute: 
   warning: false
