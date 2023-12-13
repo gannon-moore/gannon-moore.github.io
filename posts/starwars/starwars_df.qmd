@@ -1,9 +1,9 @@
 ---
-title: "Resturants"
+title: " NYC Resturants"
 author: "Gannon Moore"
 date: "2023-12-12"
 categories: [New York, City]
-image: "Restaurant.jpg"
+image: "Restaurant Picture.jpg"
 
 execute: 
   warning: false
