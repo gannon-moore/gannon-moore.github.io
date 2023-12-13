@@ -1,0 +1,166 @@
+---
+title: " NFL 2022"
+author: "Gannon Moore"
+date: "2023-12-12"
+categories: [Team, City]
+image: "image2.jpg"
+
+execute: 
+  warning: false
+  message: false
+  
+toc: true
+---
+```{r}
+#| include: false
+
+library(knitr)
+library(rmarkdown)
+library(tidyverse)
+library(skimr)
+library(ggthemes)
+library(hrbrthemes)
+
+theme_set(theme_ipsum()+
+          theme(strip.background =element_rect(fill="lightgray"),
+                axis.title.x  = element_text(angle = 0,
+                                            size = rel(1.5),
+                                            margin = margin(10,0,0,0)),
+                axis.title.y  = element_text(angle = 0,
+                                            size = rel(1.5),
+                                            margin = margin(0,10,0,0))
+                )
+          )
+```
+
+Let's analyze the `NFL` data:
+execute:
+  warning: false
+  message: false
+ 
+toc: true
+---
+```{r}
+#| include: false
+
+library(knitr)
+library(rmarkdown)
+library(tidyverse)
+library(skimr)
+library(ggthemes)
+library(hrbrthemes)
+
+theme_set(theme_ipsum()+
+          theme(strip.background =element_rect(fill="lightgray"),
+                axis.title.x  = element_text(angle = 0,
+                                            size = rel(1.5),
+                                            margin = margin(10,0,0,0)),
+                axis.title.y  = element_text(angle = 0,
+                                            size = rel(1.5),
+                                            margin = margin(0,10,0,0))
+                )
+          )
+```
+
+# Q2
+
+```{r}
+
+NFL2022_stuffs <- read_csv("https://bcdanl.github.io/data/NFL2022_stuffs.csv")
+
+```
+```{r}
+#| results: asis
+rmarkdown::paged_table(NFL2022_stuffs)
+```
+
+### Q2a
+
+```{r}
+NFL2022_stuffs <- subset(NFL2022_stuffs, !is.na(posteam))
+
+NFL2022_stuffs <- NFL2022_stuffs[!is.na(NFL2022_stuffs$posteam), ]
+
+```
+
+### Q2b
+
+```{r}
+
+
+Q2b <- NFL2022_stuffs %>%
+  filter(wp > 0.20 & wp < 0.75 & down <= 2 & half_seconds_remaining > 120) %>%
+  group_by(posteam) %>%
+  summarize(mean_pass = mean(pass, na.rm = TRUE))
+
+# Print the resulting data frame
+print(Q2b)
+
+```
+
+### Q2c
+
+```{r}
+Q2c <- Q2b %>%
+  arrange(mean_pass)
+
+# ggplot code with geom_point()
+ggplot(Q2c, aes(x = reorder(posteam, mean_pass), y = mean_pass)) +
+  geom_point() +
+  labs(
+    title = "Mean Value of Pass for Each posteam",
+    x = "posteam",
+    y = "Mean Pass Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for better readability
+```
+
+
+### Q2d
+
+```{r}
+NFL2022_epa <- read_csv('https://bcdanl.github.io/data/NFL2022_epa.csv')
+```
+
+```{r}
+NFL2022_stuffs_EPA <- merge(NFL2022_stuffs, NFL2022_epa, all.x = TRUE)
+
+NFL2022_stuffs_EPA <- subset(NFL2022_stuffs_EPA, !is.na(passer))
+
+```
+
+
+### Q2e
+```{r}
+ggplot(NFL2022_stuffs_EPA, aes(x = week, y = epa, color = passer)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "NFL Weekly Trend of Mean EPA for J.Allen and P.Mahomes",
+       x = "Week",
+       y = "Mean EPA") +
+  theme_minimal()
+```
+
+### Q2f
+```{r}
+# Calculate the mean EPA for each passer and week
+mean_epa_by_passer_week <- NFL2022_stuffs_EPA %>%
+  group_by(passer, week) %>%
+  summarize(mean_epa = mean(epa, na.rm = TRUE))
+
+# Pivot the data to have passers as columns
+mean_epa_pivoted <- pivot_wider(mean_epa_by_passer_week, names_from = passer, values_from = mean_epa)
+
+# Calculate the difference between the mean value of EPA for "J.Allen" and "P.Mahomes"
+mean_epa_pivoted$epa_difference <- mean_epa_pivoted$J.Allen - mean_epa_pivoted$P.Mahomes
+
+# Display the result
+print(mean_epa_pivoted)
+```
+
+### Q2g
+```{r}
+
+```
+
