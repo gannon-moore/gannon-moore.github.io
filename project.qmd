@@ -1,12 +1,12 @@
 ---
 title: DANL Project
 subtitle: "Data-Driven Mastery: Unlocking Business Potential"
-author: 
-  - Name 1
-  - Name 2
-  - Name 3
-  - Name 4
-  - Name 5
+author: Gannon Moore 
+  - Name Gannon Moore 
+  - Name Jake Nielson
+  - Name Casey Connors 
+  - Name Aiden Cameron
+  
 
 toc: true
 toc-title: "Table of Contents"
