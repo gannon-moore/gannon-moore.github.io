@@ -61,7 +61,7 @@ The data set `swimming` contains a list of the all time top 200 times in the wor
 
 ```{r}
 swimming <- read_csv("Swimming Data.csv")
-```
+``` 
 
 ```{r}
 #| results: asis
