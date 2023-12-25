@@ -1,8 +1,3 @@
-https://gannon-moore.github.io/ 
-
-
-
-
 ---
 title: " NFL 2022"
 author: "Gannon Moore"
@@ -39,12 +34,6 @@ theme_set(theme_ipsum()+
 ```
 
 Let's analyze the `NFL` data:
-execute:
-  warning: false
-  message: false
- 
-toc: true
----
 ```{r}
 #| include: false
 

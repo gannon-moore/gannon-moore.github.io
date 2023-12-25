@@ -1,12 +1,11 @@
 ---
 title: DANL Project
-subtitle: "Data-Driven Mastery: Unlocking Business Potential"
-author: Gannon Moore 
-  - Name Gannon Moore 
-  - Name Jake Nielson
-  - Name Casey Connors 
-  - Name Aiden Cameron
-  
+subtitle: "Taking a look at the fastest swimming times"
+authors:
+  - Gannon Moore
+  - Jake Nielsen
+  - Aidan Camerom
+  - Casey Connors
 
 toc: true
 toc-title: "Table of Contents"
@@ -31,11 +30,11 @@ library(hrbrthemes)
 
 theme_set(theme_ipsum()+
           theme(strip.background =element_rect(fill="lightgray"),
-                axis.title.x = 
+                axis.title.x =
                   element_text(angle = 0,
                                size = rel(1.33),
                                margin = margin(10,0,0,0)),
-                axis.title.y = 
+                axis.title.y =
                   element_text(angle = 0,
                                size = rel(1.33),
                                margin = margin(0,10,0,0))
@@ -47,46 +46,139 @@ theme_set(theme_ipsum()+
 
 # Introduction
 
-About this project :clap:
+About this project
 
-```{r}
-1 + 1
-```
+This page will give you an overview and good idea of the distribution of top swim times and show you just how impressive the world record and top times really are.
+
 
 
 # Data
 
-The data.frame `mpg` contains a subset of the fuel economy data that the EPA makes available on [https://fueleconomy.gov/](https://fueleconomy.gov/). It contains only models which had a new release every year between 1999 and 2008 - this was used as a proxy for the popularity of the car. :oncoming_automobile:
+The data set `swimming` contains a list of the all time top 200 times in the world. This list is filtered to the 50LCM (long course meters) freestyle and only one time per person. The data set also contains other useful information about the swim, such as the name, year, country, and meet name. The data is filtered to contain only best times for a swimmer, meaning no repeated names on the list.
 
 
 ## Summary Statistics
 
 ```{r}
-mpg <- ggplot2::mpg
+swimming <- read_csv("Swimming Data.csv")
 ```
 
 ```{r}
 #| results: asis
 #| echo: false
-rmarkdown::paged_table(mpg) 
+rmarkdown::paged_table(swimming)
 ```
 
 
 ```{r}
-skim(mpg) %>% 
-  select(-n_missing)
+skim(swimming)
 ```
 
 
-## MPG and a Type of Cars
-The following boxplot shows how the distribution of highway MPG (`hwy`) varies by a type of cars (`class`) :blue_car: :truck: :minibus:.
+# Overview of the top times
+The following histogram shows the frequency of the top times in the world. You can see that the frequency decreases fast as the time gets closer to the world record of 20.9
 
 
 ```{r}
-ggplot(data = mpg) +
-  geom_boxplot(aes(x = class, y = hwy, fill = class),
-               show.legend = F) +
-  labs(x = "Class", y = "Highway\nMPG") 
+ggplot(data = swimming) +
+  geom_histogram(aes(x = swim_time, fill = swim_time), color = "black", fill = "blue", bins = 30) +
+  scale_x_continuous(breaks = seq(20.90, max(swimming$swim_time), by = 0.1)) +
+  ggtitle("Top 200 times, 50 LCM freestyle") +
+  xlab("Swim Time") +
+  ylab("Count")
 ```
 
+
+# Country frequency
+This is a list and bar graph that shows the countries with the most swimmers on the top 200 list
+
+
+```{r}
+p2 <- swimming %>%
+  count(team_short_name) %>%
+  arrange(-n) %>%
+  head(10)
+
+p2
+```
+
+```{r}
+p3 <- swimming %>%
+  filter( team_code %in% c("USA", "RUS", "AUS", "BRA", "ITA", "FRA", "JPN", "GBR", "HUN", "NED"))
+ggplot(data = p3, aes(y = team_short_name)) +
+  geom_bar(fill = "lightblue", color = "black") +
+  ggtitle("Bar Plot of Team Frequencies") +
+  xlab("Country") +
+  ylab("Frequency")
+```
+
+
+# Age of top times
+
+This section will show you the distribution of age
+
+
+```{r}
+library(lubridate)
+library(dplyr)
+
+swimming <- swimming %>%
+  mutate(
+    birth_date = dmy(birth_date),
+    age = floor(year(Sys.Date()) - year(birth_date)),
+    swim_date = dmy(swim_date),
+    meet_age = floor(year(Sys.Date()) - year(swim_date)),
+    age_at_time_of_swim = age - meet_age
+  )
+```
+
+```{r}
+skim(swimming$age_at_time_of_swim)
+```
+
+It seems that the peak age of performance for the 50 freesetyle is 23 years old. The youngest swimmer is 17 years old and the oldest swimmer is 35 years old.
+
+```{r}
+ggplot(data = swimming) +
+  geom_bar(aes(x = age_at_time_of_swim), color = "black", fill = "purple", bins = 30) +
+  ggtitle("Age distribution") +
+  xlab("Age") +
+  ylab("Count")
+```
+
+This histogram shows that the age peaks at 23 and gradually declines to 30, after that there are very few swimmers on the list that old.
+
+
+# Location of top times
+
+This section will show what countries the top performances were swum at
+
+```{r}
+p5 <- swimming %>%
+  count(country_code) %>%
+  arrange(-n) %>%
+  head(10)
+
+p2
+```
+
+This table displays which countries have the most top performances
+
+```{r}
+ggplot(data = swimming, aes(x = country_code)) +
+  geom_bar(fill = "lightblue", color = "black") +
+  ggtitle("Bar Plot of Team Frequencies") +
+  xlab("Country") +
+  ylab("Frequency") +
+  theme(strip.text = element_text(size = rel(1)),
+        axis.text.x = element_text(angle = 45,
+                                   size = rel(1)))
+```
+
+This bar chart displays all countries top 200 swims have been in, USA being significantly more than the rest
+
+
+# Conclusion
+
+The analysis of the top 200 swimming times in the 50LCM freestyle reveals valuable insights into the competitive landscape of this particular swimming event. By examining the distribution of times and identifying trends we can gain a comprehensive understanding of the current performance standards and potential areas for improvement. This data-driven approach not only aids in benchmarking individual performances but also contributes to the broader understanding of the sport, assisting in the development of strategic training and competition strategies.
 
